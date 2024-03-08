@@ -33,6 +33,8 @@ var config = {
 
     var game = new Phaser.Game(config);
 
+    var passarinho;
+
     function preload() {
         this.load.image('bg', 'assets/bg_space.png');
         this.load.spritesheet('bird', 'assets/bird-purple.png',{frameWidth: 75, frameHeight: 75});
@@ -40,10 +42,35 @@ var config = {
 
     function create() {
         this.add.image(400, 300, 'bg').setScale(1.2);
-        this.add.sprite(100, 300, 'bird').setScale(1.3);
+        passarinho = this.add.sprite(100, 300, 'bird').setScale(1.3);
+
+        this.anims.create({
+            key: 'fly',
+            frames: this.anims.generateFrameNumbers('bird', {start:0, end: 7 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        passarinho.anims.play('fly', true);
+
     }
 
     function update() { 
+        if(passarinho.x===100){
+            passarinho.setFlip(false, false);
+            passarinho.ida= true;
+        }
+        if(passarinho.x < 700 && passarinho.ida===true){
+            console.log("o que acontece?");
+            passarinho.x += 5;
+        }
+        if(passarinho.x===700) {
+            passarinho.setFlip(true, false);
+            passarinho.ida = false;
+        }
+        if(passarinho.x>100 && passarinho.ida === false) {
+            console.log("e o que acontece agora?");
+            passarinho.x -= 5;
+        }
     }
 
 </script>
